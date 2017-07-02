@@ -1,0 +1,10 @@
+Reviews = LOAD 'review.csv' USING PigStorage('^') as (review_id:chararray, user_id:chararray, business_id:chararray, star:float);
+Businesses = LOAD 'business.csv' USING PigStorage('^') as (business_id:chararray, address:chararray,categories:chararray);
+BusinessGroups = GROUP Reviews BY business_id;
+BusinessGroupscount = FOREACH BusinessGroups GENERATE group, COUNT(Reviews.star) as countstars;
+BusinessDetails = JOIN Businesses BY business_id, BusinessGroupscount BY group;
+distinctBusinesses = DISTINCT BusinessDetails;
+TXBusinesses = FILTER distinctBusinesses BY (Businesses::address MATCHES '.* TX .*');
+result = FOREACH TXBusinesses GENERATE Businesses::business_id,BusinessGroupscount::countstars;
+DUMP result;
+STORE result INTO 'Q5_pig';

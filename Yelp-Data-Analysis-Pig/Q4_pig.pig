@@ -1,0 +1,10 @@
+Reviews = LOAD 'review.csv' USING PigStorage('^') as (review_id:chararray, user_id:chararray, business_id:chararray, star:float);
+Users = LOAD 'user.csv' Using PigStorage('^') AS (user_id:chararray, name:chararray, url:chararray);
+UsersGroups = GROUP Reviews BY user_id;
+UsersCounts = FOREACH UsersGroups GENERATE group, COUNT(Reviews.star) as countstars;
+UsersDetails =JOIN Users BY user_id, UsersCounts BY group;
+sortCounts = ORDER UsersDetails BY UsersCounts::countstars DESC;
+limitResults = LIMIT sortCounts 10;
+result = FOREACH limitResults GENERATE Users::user_id, Users::name, UsersCounts::countstars;
+DUMP result;
+STORE result INTO 'Q4_pig'; 

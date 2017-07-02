@@ -1,0 +1,11 @@
+Reviews = LOAD 'review.csv' USING PigStorage('^') as (review_id:chararray, user_id:chararray, business_id:chararray, star:float);
+Businesses = LOAD 'business.csv' USING PigStorage('^') as (business_id:chararray, address:chararray,categories:chararray);
+BusinessGroups = GROUP Reviews BY business_id;
+BusinessGroupsrating = FOREACH BusinessGroups GENERATE group, AVG(Reviews.star) as averagestars;
+BusinessDetails = JOIN Businesses BY business_id, BusinessGroupsrating BY group;
+distinctBusinesses = DISTINCT BusinessDetails;
+sortstars = ORDER distinctBusinesses BY BusinessGroupsrating::averagestars DESC;
+limitResults = LIMIT sortstars 10;
+result = FOREACH limitResults GENERATE Businesses::business_id,Businesses::address,Businesses::categories,BusinessGroupsrating::averagestars;
+DUMP result;
+STORE result INTO 'Q1_pig';
