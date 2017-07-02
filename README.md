@@ -1,3 +1,2 @@
 # Data-Science-Big-Data
-1. Map reduce
-2. Twitter- Fetch trending hastags
+Map reduce, Twitter- Fetch trending hastags, word count etc.
