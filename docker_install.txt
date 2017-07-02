@@ -1,0 +1,33 @@
+sudo apt-get install docker.io
+sudo docker pull cloudera/quickstart:latest
+sudo docker images (to check if installation is proper)
+
+1) run docker
+sudo docker run --hostname=quickstart.cloudera --privileged=true -t -i 
+-p 8888:8888 -p 80:80 --name=clouderakavya cloudera/quickstart /usr/bin/docker-quickstart
+
+2)
+sudo docker start clouderakavya
+sudo docker attach clouderakavya
+
+3)
+
+a) sudo docker ps
+[sudo] password for kavya:
+CONTAINER ID        IMAGE                        COMMAND                CREATED             
+STATUS              PORTS                                        NAMES
+
+a23d112350db        cloudera/quickstart:latest   "/usr/bin/docker-qui   20 minutes ago      
+Up 3 minutes        0.0.0.0:80->80/tcp, 0.0.0.0:8888->8888/tcp clouderakavya       
+
+b) sudo docker inspect -f   '{{.Id}}' a23d112350db
+sudo docker inspect -f   '{{.Id}}' a23d112350db
+a23d112350dbfaf7f3581430064870159a4deb7cda74459920444fc93d1ef736
+
+c) sudo cp pad.png /var/lib/docker/aufs/mnt/a23d112350dbfaf7f3581430064870159a4deb7cda74459920444fc93d1ef736/testkavya/pad.png
+
+
+
+
+
+
