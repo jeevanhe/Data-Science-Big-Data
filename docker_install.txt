@@ -26,6 +26,8 @@ a23d112350dbfaf7f3581430064870159a4deb7cda74459920444fc93d1ef736
 
 c) sudo cp pad.png /var/lib/docker/aufs/mnt/a23d112350dbfaf7f3581430064870159a4deb7cda74459920444fc93d1ef736/testkavya/pad.png
 
+More information:
+https://medium.com/@SnazzyHam/how-to-get-up-and-running-with-clouderas-quickstart-docker-container-732c04ed0280
 
 
 
